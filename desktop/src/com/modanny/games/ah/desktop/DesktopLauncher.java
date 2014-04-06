@@ -8,6 +8,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
     config.title = "Asteroid Hunter";
+    config.width = AsteroidHunterGame.RESOLUTION_WIDTH;
+    config.height = AsteroidHunterGame.RESOLUTION_HEIGHT;
 		new LwjglApplication(new AsteroidHunterGame(), config);
 	}
 }
