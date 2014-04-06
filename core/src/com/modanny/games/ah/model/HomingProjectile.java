@@ -21,7 +21,7 @@ public class HomingProjectile extends Projectile {
       else {
         Vector2 desiredVelocity = targetAsteroid.getPosition().cpy().sub(position).nor().scl(MAX_SPEED);
         Vector2 steering = desiredVelocity.sub(velocity);
-        velocity.add(steering.nor().scl(0.05f));
+        velocity.add(steering.nor().scl(0.15f));
       }
     }
     move(deltaTime);

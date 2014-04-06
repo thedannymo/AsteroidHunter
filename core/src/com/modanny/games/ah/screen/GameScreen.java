@@ -14,10 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -27,8 +24,6 @@ import com.modanny.games.ah.model.Ship;
 import com.modanny.games.ah.model.World;
 
 public class GameScreen extends InputAdapter implements Screen {
-  private static final String LIVES_BUFFER_STRING = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-
   private static enum GameState {
     READY(1.0f),
     RUNNING(0.0f),
@@ -58,7 +53,7 @@ public class GameScreen extends InputAdapter implements Screen {
       new Stage(new StretchViewport(AsteroidHunterGame.RESOLUTION_WIDTH, AsteroidHunterGame.RESOLUTION_HEIGHT));
   private final Label.LabelStyle labelStyle = new Label.LabelStyle(Assets.font, Color.GREEN);
   private final Label scoreLabel = new Label("Score", labelStyle);
-  private final Label livesLabel = new Label("Lives", labelStyle);
+  private final Table livesTable = new Table();
   private final Label startLabel = new Label("Tap to start...", labelStyle);
   private final Label quitLabel = new Label("Tap to quit...", labelStyle);
   private final RoundImageButton leftButton = new RoundImageButton(
@@ -129,12 +124,15 @@ public class GameScreen extends InputAdapter implements Screen {
 
   private void layoutUI() {
     scoreLabel.setPosition(4, AsteroidHunterGame.RESOLUTION_HEIGHT - scoreLabel.getHeight());
-    livesLabel.setPosition(4, scoreLabel.getY() - scoreLabel.getHeight());
     startLabel.setPosition(AsteroidHunterGame.RESOLUTION_WIDTH / 2 - startLabel.getWidth() / 2, AsteroidHunterGame.RESOLUTION_HEIGHT / 2 - startLabel.getHeight() / 2);
     quitLabel.setPosition(AsteroidHunterGame.RESOLUTION_WIDTH / 2 - startLabel.getWidth() / 2, AsteroidHunterGame.RESOLUTION_HEIGHT / 2 - startLabel.getHeight() / 2);
 
+
+    livesTable.setWidth(300);
+    livesTable.setHeight(30);
+    livesTable.setPosition(4, scoreLabel.getY() - scoreLabel.getHeight());
     ui.addActor(scoreLabel);
-    ui.addActor(livesLabel);
+    ui.addActor(livesTable);
     ui.addActor(startLabel);
     ui.addActor(quitLabel);
     ui.addActor(leftButton);
@@ -144,7 +142,7 @@ public class GameScreen extends InputAdapter implements Screen {
     ui.addActor(teleportButton);
 
     scoreLabel.setVisible(false);
-    livesLabel.setVisible(false);
+    livesTable.setVisible(false);
     startLabel.setVisible(false);
     quitLabel.setVisible(false);
     leftButton.setVisible(false);
@@ -163,7 +161,7 @@ public class GameScreen extends InputAdapter implements Screen {
     switch (newState) {
       case READY: {
         scoreLabel.setVisible(true);
-        livesLabel.setVisible(true);
+        livesTable.setVisible(true);
         leftButton.setVisible(true);
         rightButton.setVisible(true);
         upButton.setVisible(true);
@@ -256,7 +254,13 @@ public class GameScreen extends InputAdapter implements Screen {
     int worldLives = world.getNumLives();
     if (worldLives != lives) {
       lives = worldLives;
-      livesLabel.setText(LIVES_BUFFER_STRING.substring(0, worldLives));
+      livesTable.clearChildren();
+      // TODO: start new row every 5
+      for (int i = 0; i < lives; i++)
+        livesTable.add(new Image(Assets.shipGlow)).left();
+
+      livesTable.add().expandX();
+      livesTable.invalidate();
     }
     if (world.getState() == World.WorldState.GAME_OVER)
       changeState(GameState.FINISHED);
@@ -286,8 +290,6 @@ public class GameScreen extends InputAdapter implements Screen {
   @Override
   public void render(float delta) {
     update(delta);
-    ui.act(delta);
-
 
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     Gdx.gl.glEnable(GL20.GL_TEXTURE_2D);

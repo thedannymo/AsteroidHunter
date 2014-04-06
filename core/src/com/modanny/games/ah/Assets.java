@@ -11,6 +11,7 @@ public final class Assets {
 
   public static TextureRegion asteroid;
   public static TextureRegion shipIdle;
+  public static TextureRegion shipGlow;
   public static Animation shipAnimation;
   public static Animation teleportLeavingAnimation;
   public static Animation teleportArrivingAnimation;
@@ -50,10 +51,11 @@ public final class Assets {
   public static void load() {
     Texture spriteAtlas = loadTexture("images/asteroids_atlas.png");
     spriteAtlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-    Texture backgroundAtlas = loadTexture("images/asdroids_background.png");
+    Texture backgroundAtlas = loadTexture("images/background.png");
     backgroundAtlas.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
     shipIdle = new TextureRegion(spriteAtlas, 0, 0, 21, 24);
+    shipGlow = new TextureRegion(spriteAtlas, 71, 0, 25, 24);
     TextureRegion shipAccelerating1 = new TextureRegion(spriteAtlas, 21, 0, 21, 24);
     TextureRegion shipAccelerating2 = new TextureRegion(spriteAtlas, 42, 0, 21, 24);
     shipAnimation = new Animation(.05f, shipAccelerating1, shipAccelerating2);
@@ -91,7 +93,7 @@ public final class Assets {
     shootButtonPressed = new TextureRegion(spriteAtlas, 0, 208, 44, 44);
     teleportButtonPressed = new TextureRegion(spriteAtlas, 43, 209, 44, 44);
 
-    background = new TextureRegion(backgroundAtlas, 0, 0, 480, 320);
+    background = new TextureRegion(backgroundAtlas, 0, 0, 800, 600);
 
     Texture menuAtlas = loadTexture("images/asteroids_menu.png");
     logo = new TextureRegion(spriteAtlas, 0, 400, 320, 110);

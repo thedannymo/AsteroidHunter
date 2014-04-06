@@ -9,14 +9,14 @@ import com.modanny.games.ah.AsteroidHunterGame;
 import java.util.*;
 
 public class World {
-  public static final float WORLD_WIDTH = 15;
-  public static final float WORLD_HEIGHT = 10;
+  public static final float WIDTH = 20;
+  public static final float HEIGHT = 15;
 
   public static final List<Vector2> SPAWN_POSITIONS;
 
   static {
-    int positionsWidth = (int) (WORLD_WIDTH / 0.25f);
-    int positionsHeight = (int) (WORLD_HEIGHT / 0.25f);
+    int positionsWidth = (int) (WIDTH / 0.25f);
+    int positionsHeight = (int) (HEIGHT / 0.25f);
     SPAWN_POSITIONS = new ArrayList<Vector2>(positionsWidth * positionsHeight);
     for (int i = 0; i < positionsWidth; i++) {
       for (int j = 0; j < positionsHeight; j++)
@@ -51,7 +51,6 @@ public class World {
   private final List<Projectile> projectiles = new ArrayList<Projectile>();
   private final List<Asteroid> asteroids = new ArrayList<Asteroid>();
   private final List<ParticleEffectPool.PooledEffect> explosions = new ArrayList<ParticleEffectPool.PooledEffect>(15);
-  private final Random rand = new Random();
 
   private Ship ship;
   private WorldState state;
@@ -62,7 +61,7 @@ public class World {
 
   public World(AsteroidHunterGame game) {
     this.game = game;
-    ship = new Ship(game, this, WORLD_WIDTH / 2, WORLD_HEIGHT / 2);
+    ship = new Ship(game, this, WIDTH / 2, HEIGHT / 2);
     state = WorldState.RUNNING;
     numLives = 3;
     bonusCount = 0;
@@ -77,20 +76,6 @@ public class World {
 
     int numAsteroids = 5 + (level - 1);
     ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>(numAsteroids);
-//    for (int i = 0; i < numAsteroids; i++)
-//    {
-//      float x = rand.nextFloat() * WORLD_WIDTH;
-//      float y = rand.nextFloat() * WORLD_HEIGHT;
-//      Asteroid asteroid = new Asteroid(Asteroid.AsteroidSize.LARGE, x, y);
-//      do // TODO can we do this better?
-//      {
-//        x = rand.nextFloat() * WORLD_WIDTH;
-//        y = rand.nextFloat() * WORLD_HEIGHT;
-//
-//        asteroid.getPosition().set(x, y);
-//      }
-//      while (asteroid.getPosition().dst(ship.getPosition()) < 3);
-//    }
     for (int i = 0; i < numAsteroids; i++) {
       Collections.shuffle(SPAWN_POSITIONS);
       for (Vector2 spawnPos : SPAWN_POSITIONS) {
@@ -106,10 +91,10 @@ public class World {
   private boolean respawnShip() {
     // can't respawn while asteroids block the respawn point
     for (Asteroid a : asteroids) {
-      if (a.getPosition().dst(WORLD_WIDTH / 2, WORLD_HEIGHT / 2) < a.getBounds().radius * 2.0f)
+      if (a.getPosition().dst(WIDTH / 2, HEIGHT / 2) < a.getBounds().radius * 2.0f)
         return false;
     }
-    ship = new Ship(game, this, WORLD_WIDTH / 2, WORLD_HEIGHT / 2);
+    ship = new Ship(game, this, WIDTH / 2, HEIGHT / 2);
     return true;
   }
 

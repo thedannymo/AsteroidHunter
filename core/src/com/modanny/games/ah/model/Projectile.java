@@ -32,18 +32,18 @@ public abstract class Projectile {
     distance.add(dx, dy); // TODO: this is wrong (absolute value instead?)
 
     if (position.x < 0) {
-      oldPosition.x = World.WORLD_WIDTH + (oldPosition.x - position.x);
-      position.x = World.WORLD_WIDTH;
+      oldPosition.x = World.WIDTH + (oldPosition.x - position.x);
+      position.x = World.WIDTH;
     }
-    else if (position.x > World.WORLD_WIDTH) {
+    else if (position.x > World.WIDTH) {
       oldPosition.x = oldPosition.x - position.x;
       position.x = 0;
     }
     if (position.y < 0) {
-      oldPosition.y = World.WORLD_HEIGHT + (oldPosition.y - position.y);
-      position.y = World.WORLD_HEIGHT;
+      oldPosition.y = World.HEIGHT + (oldPosition.y - position.y);
+      position.y = World.HEIGHT;
     }
-    else if (position.y > World.WORLD_HEIGHT) {
+    else if (position.y > World.HEIGHT) {
       oldPosition.y = oldPosition.y - position.y;
       position.y = 0;
     }

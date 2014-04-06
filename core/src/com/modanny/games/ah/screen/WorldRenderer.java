@@ -15,10 +15,7 @@ import com.modanny.games.ah.model.Ship;
 import com.modanny.games.ah.model.World;
 
 public class WorldRenderer {
-  private static final float FRUSTUM_WIDTH = 15;
-  private static final float FRUSTUM_HEIGHT = 10;
-
-  private final OrthographicCamera cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+  private final OrthographicCamera cam = new OrthographicCamera(World.WIDTH, World.HEIGHT);
   private final SpriteBatch batch;
   private final ShapeRenderer debugRenderer = new ShapeRenderer();
   private final World world;
@@ -31,7 +28,7 @@ public class WorldRenderer {
     batch = new SpriteBatch();
     batch.enableBlending();
 
-    cam.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
+    cam.position.set(World.WIDTH / 2, World.HEIGHT / 2, 0);
     cam.update();
 
     debugRenderer.setColor(Color.RED);
@@ -62,7 +59,7 @@ public class WorldRenderer {
   }
 
   private void renderBackground() {
-    batch.draw(Assets.background, 0, 0, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+    batch.draw(Assets.background, 0, 0, World.WIDTH, World.HEIGHT);
   }
 
   private void renderShipDebug() {

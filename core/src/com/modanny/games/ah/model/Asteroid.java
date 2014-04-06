@@ -67,18 +67,18 @@ public class Asteroid {
     rotationDegrees = (rotationDegrees + rotationDegreesSecond * deltaTime) % 360;
 		
 		if (position.x + bounds.radius < 0) {
-      oldPosition.x = World.WORLD_WIDTH + (oldPosition.x - position.x);
-			position.x = World.WORLD_WIDTH + bounds.radius;
+      oldPosition.x = World.WIDTH + (oldPosition.x - position.x);
+			position.x = World.WIDTH + bounds.radius;
 		}
-    else if (position.x - bounds.radius > World.WORLD_WIDTH) {
+    else if (position.x - bounds.radius > World.WIDTH) {
       oldPosition.x = oldPosition.x - position.x;
 			position.x = 0 - bounds.radius;
 		}
 		if (position.y + bounds.radius < 0) {
-      oldPosition.y = World.WORLD_HEIGHT + (oldPosition.y - position.y);
-			position.y = World.WORLD_HEIGHT + bounds.radius;
+      oldPosition.y = World.HEIGHT + (oldPosition.y - position.y);
+			position.y = World.HEIGHT + bounds.radius;
 		}
-    else if (position.y - bounds.radius > World.WORLD_HEIGHT) {
+    else if (position.y - bounds.radius > World.HEIGHT) {
       oldPosition.y = oldPosition.y - position.y;
 			position.y = 0 - bounds.radius;
 		}

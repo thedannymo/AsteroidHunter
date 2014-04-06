@@ -86,13 +86,13 @@ public class Ship {
     position.add(dx, dy);
 
     if (position.x + bounds.radius < 0)
-      position.x = World.WORLD_WIDTH;
-    else if (position.x > World.WORLD_WIDTH)
+      position.x = World.WIDTH;
+    else if (position.x > World.WIDTH)
       position.x = 0 - bounds.radius;
 
     if (position.y + bounds.radius < 0)
-      position.y = World.WORLD_HEIGHT;
-    else if (position.y > World.WORLD_HEIGHT)
+      position.y = World.HEIGHT;
+    else if (position.y > World.HEIGHT)
       position.y = 0 - bounds.radius;
 
     bounds.x = position.x;
